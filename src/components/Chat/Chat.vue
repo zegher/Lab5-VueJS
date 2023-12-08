@@ -5,8 +5,20 @@
 
 
     const sendMessage = () => {
-        allMessages.data.push(message.value);
-        message.value = "";
+        fetch("https://lab5-p379.onrender.com/api/v1/messages/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                user: "Zegher Baerts",
+                text: message.value,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            });
     };
 
     //fetch user and message from https://lab5-p379.onrender.com/api/v1/messages/ and put messages in allMessages.data
@@ -40,7 +52,7 @@
 <template>
     <div>
         <ul>
-            <li v-for="m in allMessages.data">{{ m }}</li>
+            <li v-for="message in allMessages.data" :key="message.user"> <strong>{{ message.user }}</strong>: <br> {{ message.text }} </li>
         </ul>
 
         <div>
@@ -54,4 +66,17 @@
   h1 {
     color: red;
   }
+  li{
+      list-style-type: none;
+      margin-bottom: 10px;
+      border-bottom: 1px solid black;
+      
+    }
+    ul{
+        background-color: #f2f2f2;
+        margin-left: 10px;
+        padding-top: 10px;
+        margin-right: 10px;
+    }
+
 </style>
