@@ -18,6 +18,9 @@
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
+                //empty textfield and refresh page so all messages show
+                message.value = "";
+                location.reload();
             });
     };
 
