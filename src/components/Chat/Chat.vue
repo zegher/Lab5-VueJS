@@ -33,8 +33,7 @@
         onMounted(() => {fetch("https://lab5-p379.onrender.com/api/v1/messages/")
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-
+          console.log(data);            
           // Check if the "user" property exists in the API response before assigning it
           if (data.user) {
             allMessages.data = [{ user: data.user, text: data.text }];
@@ -47,6 +46,7 @@
               text: message.text,
             }));
           }
+          allMessages.data.reverse();
         });
     });
 
@@ -54,14 +54,16 @@
 
 <template>
     <div>
-        <ul>
-            <li v-for="message in allMessages.data" :key="message.user"> <strong>{{ message.user }}</strong>: <br> {{ message.text }} </li>
-        </ul>
-
         <div>
             <input v-model="message" type="text" placeholder="Type a message..." />
             <button @click="sendMessage">Send</button>
         </div>
+
+        <ul>
+            <li v-for="message in allMessages.data" :key="message.user"> <strong>{{ message.user }}</strong>: <br> {{ message.text }} </li>
+        </ul>
+
+        
     </div>
 </template>
 
